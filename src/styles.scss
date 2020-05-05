@@ -1,1 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+$color1: hsl(213, 63%, 38%);
+$color2: #fff;
+$color3: hsl(213, 24%, 95%);
+
+ribbon,
+ribbon * {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+ribbon {
+  background-color: $color1;
+  font-size: 12px;
+}
+
+ribbon button {
+  outline: none;
+  background-color: transparent;
+  color: $color2;
+  border: none;
+  font-size: 1em;
+  text-shadow: 0 0 1px;
+}
+
+ribbon [labels] li {
+  margin: 0 0.7em;
+}
+
+ribbon ribbon-tab,
+ribbon [labels] li.active {
+  background-color: $color3;
+}
+ribbon [labels] li.active button {
+  color: $color1;
+  padding: 0.5em 0.7em;
+}
+
+ribbon ribbon-application-menu > div > button {
+  background-color: transparent;
+}
+
+ribbon-quick-access-tool-bar button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.1em;
+  font-size: 24px;
+}
+
+ribbon ribbon-btn-group-item button,
+ribbon ribbon-button-toggle button,
+ribbon ribbon-button button {
+  color: rgb(63, 55, 51);
+}
+
+ribbon ribbon-btn-group-item button:hover,
+ribbon ribbon-button-toggle button:hover,
+ribbon ribbon-button button:hover {
+  background-color: rgba(48, 38, 34, 0.185);
+}
+
+ribbon ribbon-btn-group-item button.active,
+ribbon ribbon-button-toggle button.active {
+  background-color: rgba(48, 38, 34, 0.3);
+}
+
+ribbon ribbon-group [title] {
+  background-color: rgba(48, 38, 34, 0.185);
+}
+ribbon ribbon-group {
+  border: 1px solid #bbb;
+  box-shadow: 0px -36px 73px rgba(134, 118, 118, 0.27) inset;
+}
+
+ribbon [small] button {
+  font-size: 2em;
+  min-width: 1em;
+  height: 1em;
+  padding: 0.2em;
+  box-sizing: content-box;
+}
+
+ribbon [large] button {
+  font-size: 4.5em;
+  padding: 0.2em;
+}
+
+ribbon ribbon-submenu,
+ribbon ribbon-submenu > *,
+ribbon ribbon-submenu > *::before,
+ribbon ribbon-submenu > * > * {
+  background-color: $color3;
+}

@@ -1,0 +1,78 @@
+:host {
+  position: relative;
+  height: 2em;
+}
+[value] {
+  height: 1.4em;
+  background-color: #fff;
+  border-width: 1px;
+  border-style: inset;
+  border-radius: 3px;
+  padding: 0.2em;
+  box-sizing: content-box;
+}
+[value] [current] {
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  display: flex;
+  top: 0;
+  width: calc(100% - 1.5em);
+  height: 100%;
+  text-overflow: ellipsis;
+  padding: 0.4em;
+  overflow: hidden;
+  align-items: center;
+  box-sizing: border-box;
+}
+[list] {
+  margin-top: 1.4em;
+  background-color: #fff;
+  z-index: 10;
+  position: relative;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  max-height: 15em;
+  overflow-y: auto;
+
+  transition: height 0.3s;
+}
+[list].hidden {
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+[list] ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+[list] ul li {
+  user-select: none;
+  margin: 1px -0.4em;
+  padding: 0.2em 0.4em;
+}
+[list] ul li:hover {
+  background-color: steelblue;
+  color: #fff;
+}
+
+[arrow] {
+  position: absolute;
+  right: 0.4em;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+[arrow] {
+  transition: all 0.5s;
+  transform: rotate(90deg);
+}
+[arrow].hidden {
+  transform: rotate(0deg);
+}

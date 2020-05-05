@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+[toolbar], [controlbar]{
+  width: 100%;
+}
+
+[controlbar]{
+  display: flex;
+}
+
+[controlbar] [labels] ul {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  list-style: none;
+}
+
+[controlbar] [labels] ul > li {
+  display: inline-block;
+}
+
+[top] [tools] [controls] [menus] {
+  display: flex;
+  align-items: flex-start;
+}
+[top] [tools] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1 1;
+}
+[top] [tools] [bar] {
+  height: 1.5em;
+}
+[top] [tools] [labels] {
+  height: 1.5em;
+}
+
+[tabs] ::ng-deep ribbon-tab {
+  display: none;
+  width: 100%;
+}
+
+[tabs] ::ng-deep ribbon-tab.active {
+  display: block;
+}

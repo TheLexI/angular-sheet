@@ -1,0 +1,35 @@
+
+:host {
+  display: inline-flex;
+  width: 2px;
+  left: calc(50% - 1px);
+  top: 100%;
+  position: absolute;
+  justify-content: center;
+  font-size: 0.5em;
+}
+
+:host>[menuBody] {
+  display: block;
+  position: relative;
+  z-index: 1;
+  margin-top: 0.5em;
+  border-radius: 0.4em;
+  box-shadow: 0 0 0.4em #00000055;
+}
+:host>[menuBody]::before {
+  content: " ";
+  display: block;
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  transform: rotate(45deg);
+  top: -0.5em;
+  left: calc(50% - 0.5em);
+  box-shadow: 0 0 0.4em #00000055;
+}
+:host>[menuBody]>[items] {
+  border-radius: 0.4em;
+  position: relative;
+  padding: .3em;
+}

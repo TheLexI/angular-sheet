@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+:host > div, :host > div > button {
+  height: 100%;
+}

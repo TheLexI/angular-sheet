@@ -1,0 +1,25 @@
+<div toolbar>
+  <ng-content select="ribbon-quick-access-tool-bar"></ng-content>
+</div>
+
+<div controlbar>
+  <div menus>
+    <ng-content select="ribbon-application-menu"></ng-content>
+  </div>
+  <div labels>
+    <ul>
+      <li
+        *ngFor="let tab of tabs.childNodes; let i = index"
+        [ngClass]="{ active: (activeTab | async) == i }"
+      >
+        <button (click)="active(i)">
+          {{ tab.getAttribute("label") }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div #tabs tabs>
+  <ng-content select="ribbon-tab" #tab></ng-content>
+</div>

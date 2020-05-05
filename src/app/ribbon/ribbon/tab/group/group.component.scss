@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 0.5em;
+  margin: 2px;
+}
+:host > [panels] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+:host > [title] {
+  text-align: center;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.4em;
+  padding-right: 1.5em;
+  overflow: hidden;
+}
+
+[open] {
+  position: absolute;
+  right: -.3em;
+  color: #cccccc;
+}
+
+[open]:hover {
+  position: absolute;
+
+  color: #333333;
+  cursor: pointer;
+}

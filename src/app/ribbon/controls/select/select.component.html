@@ -1,0 +1,28 @@
+<div value>
+  <div current (click)="hidden = !hidden">
+    {{ name | async }}
+  </div>
+  <div arrow [ngClass]="{ hidden: hidden }" (click)="hidden = !hidden">
+    <span
+      class="iconify"
+      data-icon="bx:bx-down-arrow"
+      data-inline="false"
+    ></span>
+  </div>
+  <div list [ngClass]="{ hidden: hidden }">
+    <ul>
+      <li
+        *ngFor="let item of items"
+        (click)="
+          setValue({
+            name: item.ref.nativeElement.innerText,
+            value: item.payload
+          });
+          hidden = true
+        "
+      >
+        {{ item.ref.nativeElement | dom }}
+      </li>
+    </ul>
+  </div>
+</div>
