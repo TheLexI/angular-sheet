@@ -99,3 +99,10 @@ ribbon ribbon-submenu > *::before,
 ribbon ribbon-submenu > * > * {
   background-color: $color3;
 }
+
+
+
+html, body, app-root{
+  height: 100%;
+}
+app-root{display: block;}

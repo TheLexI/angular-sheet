@@ -1,4 +1,4 @@
-<div>
+<div style="height: 11.5em;">
   <ribbon (command)="doCommand($event)">
     <ribbon-quick-access-tool-bar>
       <ribbon-button [command]="Commands.Save" [payload]="{ payload: 'save' }">
@@ -261,7 +261,7 @@
                 ></span>
               </ribbon-btn-group-item>
             </ribbon-btn-group>
-            <ribbon-button small  [command]="Commands.EditIndentDesc">
+            <ribbon-button small [command]="Commands.EditIndentDesc">
               <span
                 class="iconify"
                 data-icon="mdi:format-indent-decrease"
@@ -331,3 +331,6 @@
     </ribbon-tab>
   </ribbon>
 </div>
+<sheet-page
+  style="height: calc(100% - 11.5em);"
+></sheet-page>

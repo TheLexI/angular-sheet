@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+[page] {
+  position: relative;
+  height: 100%;
+}
+
+[row-headers],
+[col-headers] {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+}
+[col-headers] {
+  right: 0;
+}
+[row-headers] {
+  bottom: 0;
+}
+
+[row-headers] > *,
+[col-headers] > * {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border: 1px solid #EEEEEE;
+  background-color: #CCCCCC;
+}
+
+[grid] {
+  position: absolute;
+  overflow: scroll;
+}
+[grid] [col], [grid] [row]{
+  position: absolute;
+  border: 1px solid #EEEEEE;
+}

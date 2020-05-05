@@ -1,1 +1,80 @@
-<p>page works!</p>
+<div page>
+  <div
+    col-headers
+    #colHeaders
+    [style.left.px]="sheetService.defaultHeight"
+    [style.height.px]="sheetService.defaultHeight"
+  >
+    <div
+      *ngFor="let item of sheetService.cols"
+      [style.left.px]="item.left | async"
+      [style.width.px]="item.width | async"
+      [style.height.px]="sheetService.defaultHeight"
+    >
+      {{ item.colId }}
+    </div>
+    <div
+      [style.left.px]="sheetService.lastCol.rigth | async"
+      [style.width.px]="sheetService.defaultWidth"
+    ></div>
+  </div>
+  <div
+    row-headers
+    #rowHeaders
+    [style.top.px]="sheetService.defaultHeight"
+    [style.width.px]="sheetService.defaultHeight"
+  >
+    <div
+      *ngFor="let item of sheetService.rows"
+      [style.top.px]="item.top | async"
+      [style.height.px]="item.height | async"
+      [style.width.px]="sheetService.defaultHeight"
+    >
+      {{ item.rowId }}
+    </div>
+    <div
+      [style.top.px]="sheetService.lastRow.bottom | async"
+      [style.height.px]="sheetService.defaultWidth"
+    ></div>
+  </div>
+  <div page>
+    <div
+      grid
+      #grid
+      [style.left.px]="sheetService.defaultHeight"
+      [style.top.px]="sheetService.defaultHeight"
+      [style.height]="'calc(100% - ' + sheetService.defaultHeight + 'px)'"
+      [style.width]="'calc(100% - ' + sheetService.defaultHeight + 'px)'"
+      (scroll)="
+        colHeaders.scrollLeft = grid.scrollLeft;
+        rowHeaders.scrollTop = grid.scrollTop
+      "
+    >
+      <div
+        col
+        *ngFor="let item of sheetService.cols"
+        [attr.data-col]="item.colId"
+        [style.left.px]="item.left | async"
+        [style.width.px]="item.width | async"
+        [style.height.px]="sheetService.lastRow.bottom | async"
+      ></div>
+
+      <div
+        row
+        *ngFor="let item of sheetService.rows"
+        [attr.data-row]="item.rowId"
+        [style.top.px]="item.top | async"
+        [style.height.px]="item.height | async"
+        [style.width.px]="sheetService.lastCol.rigth | async"
+      ></div>
+
+      <div
+        cursor
+        [style.left.px]="sheetService.cursor.left$ | async"
+        [style.top.px]="sheetService.cursor.top$ | async"
+        [style.rigth.px]="sheetService.cursor.right$ | async"
+        [style.bottom.px]="sheetService.cursor.bottom$ | async"
+      ></div>
+    </div>
+  </div>
+</div>
