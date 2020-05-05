@@ -20,7 +20,7 @@ export class SheetService {
   lastRow = null;
   rows = new Array(this.pageWidth).fill(null).map((a, i) => this.lastRow = new RowDto(i, this.defaultHeight, this.lastRow));
 
-  cursor = new CursorDto(this, 0, 0);
+  cursor = new CursorDto(this, 1, 1, 2, 4);
 
   constructor() { }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { SheetService } from '../sheet.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { SheetService } from '../sheet.service';
 export class PageComponent implements OnInit {
 
   constructor(
+    public ref: ElementRef,
     public sheetService: SheetService
   ) { }
 

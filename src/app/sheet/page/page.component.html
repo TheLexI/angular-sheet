@@ -70,10 +70,11 @@
 
       <div
         cursor
+        sheetCursor
         [style.left.px]="sheetService.cursor.left$ | async"
         [style.top.px]="sheetService.cursor.top$ | async"
-        [style.rigth.px]="sheetService.cursor.right$ | async"
-        [style.bottom.px]="sheetService.cursor.bottom$ | async"
+        [style.width.px]="sheetService.cursor.right$ | async"
+        [style.height.px]="sheetService.cursor.bottom$ | async"
       ></div>
     </div>
   </div>

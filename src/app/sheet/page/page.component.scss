@@ -38,3 +38,12 @@
   position: absolute;
   border: 1px solid #EEEEEE;
 }
+
+[cursor]{
+  margin-top: -1px;
+  margin-left: -1px;
+  position: absolute;
+  background-color: rgba(32, 78, 138, .2);
+  border:3px solid rgba(32, 78, 138, .5);
+  opacity: 0.5;
+}
