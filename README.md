@@ -1,5 +1,7 @@
 # Ribbon
 
+for example see (https://thelexi.github.io/angular-sheet/dist/ribbon/index.html)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
 ## Development server
