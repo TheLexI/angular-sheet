@@ -24,7 +24,7 @@ export class RibbonComponent implements OnInit {
     private ribbonService: RibbonService,
     private ref: ElementRef
   ) {
-    this.ribbonService.onCommand.subscribe(a => this.command.emit(a));
+    this.ribbonService.states$.subscribe(a => this.command.emit(a));
   }
 
   ngOnInit(): void {

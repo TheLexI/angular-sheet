@@ -26,24 +26,19 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  border: 1px solid #EEEEEE;
-  background-color: #CCCCCC;
+  border: 1px solid #eeeeee;
+  background-color: #cccccc;
+  box-sizing: border-box;
 }
 
 [grid] {
   position: absolute;
   overflow: scroll;
+  background-color: #ffffff;
 }
-[grid] [col], [grid] [row]{
+[grid] [col],
+[grid] [row] {
   position: absolute;
-  border: 1px solid #EEEEEE;
-}
-
-[cursor]{
-  margin-top: -1px;
-  margin-left: -1px;
-  position: absolute;
-  background-color: rgba(32, 78, 138, .2);
-  border:3px solid rgba(32, 78, 138, .5);
-  opacity: 0.5;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
 }

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { ColDto } from './page/dto/col-dto';
 import { RowDto } from './page/dto/row-dto';
-import { CursorDto } from './page/dto/cursor-dto';
+import { EditorService } from './editor.service';
+import { CursorComponent } from './page/cursor/cursor.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,20 @@ export class SheetService {
   pageWidth = 100;
   pageHeight = 100;
 
-  lastCol = null;
+  lastCol: ColDto = null;
   cols = new Array(this.pageWidth).fill(null).map((a, i) => this.lastCol = new ColDto(i, this.defaultWidth, this.lastCol));
 
-  lastRow = null;
+  lastRow: RowDto = null;
   rows = new Array(this.pageWidth).fill(null).map((a, i) => this.lastRow = new RowDto(i, this.defaultHeight, this.lastRow));
 
-  cursor = new CursorDto(this, 1, 1, 2, 4);
+  cursors = [this.componentFactoryResolver.resolveComponentFactory(CursorComponent)];
 
-  constructor() { }
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private editorService: EditorService
+  ) { }
+
+  command(command: { [name: string]: any }) {
+    this.editorService.command$.next(command);
+  }
 }

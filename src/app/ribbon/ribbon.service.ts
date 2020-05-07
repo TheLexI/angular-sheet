@@ -9,8 +9,6 @@ export class RibbonService {
   width = 100;
   heigth = 100;
 
-  onCommand = new Subject();
-
   states$: Subject<{ [key: string]: any }> = new Subject();
 
   states = {};

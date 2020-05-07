@@ -68,14 +68,17 @@
         [style.width.px]="sheetService.lastCol.rigth | async"
       ></div>
 
-      <div
-        cursor
-        sheetCursor
-        [style.left.px]="sheetService.cursor.left$ | async"
-        [style.top.px]="sheetService.cursor.top$ | async"
-        [style.width.px]="sheetService.cursor.right$ | async"
-        [style.height.px]="sheetService.cursor.bottom$ | async"
-      ></div>
+      <div borders></div>
+
+      <sheet-topologe
+        [topologe]="item"
+        *ngFor="let item of editorService.topologe$ | async"
+      ></sheet-topologe>
+
+      <ng-container
+        *ngFor="let item of sheetService.cursors"
+        [sheetComponent]="item"
+      ></ng-container>
     </div>
   </div>
 </div>

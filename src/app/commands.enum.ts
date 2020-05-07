@@ -7,6 +7,7 @@ export enum Commands {
   EditBorder, EditBorderAll, EditBorderOutside, EditBorderNone, EditBorderHorizontal,
   EditBorderVertical, EditBorderInside, EditBorderLeft, EditBorderRight, EditBorderTop, EditBorderBottom,
   EditFillColor, EditFontColor,
+  EditMergeCell,
   // -------
   EditAlign, EditAlignLeft, EditAlignCenter, EditAlignRigth, EditAlignJustify,
   EditValign, EditValignTop, EditValignCenter, EditValignBottom,
