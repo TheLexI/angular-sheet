@@ -4,13 +4,16 @@ import { DataDto } from './page/dto/data-dto';
 import { Subject } from 'rxjs';
 import { TopologeDto } from './page/dto/topologe-dto';
 import { Commands } from '../commands.enum';
+import { SheetService } from './sheet.service';
+import { Control } from './controls/controls';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditorService {
-
+  sheetService: SheetService;
   public topologe$ = new Subject<TopologeDto[]>();
+  public activeTopologe$ = new Subject();
 
   topologe: TopologeDto[][] = [];
   borders: BorderDto[][] = [];
@@ -21,37 +24,40 @@ export class EditorService {
   makeBorder$ = new Subject();
   command$ = new Subject<{ [name: string]: any }>();
 
-  constructor() {
+  inject(pageComponent: any) {
+    this.sheetService = pageComponent.sheetService;
+  }
+
+  constructor(
+
+  ) {
+
+    this.activeTopologe$.subscribe(console.log);
 
     this.command$.subscribe(cmd => {
-      /*Object.keys(cmd).forEach(key => {
+      Object.keys(cmd).forEach(key => {
         switch (String(key)) {
-          case String(Commands.EditMergeCell):
-            const topologe = this.getTopologe();
-            if (cmd[key]) {
-              topologe.merge();
-            } else {
-              topologe.split();
+          case String(Commands.AddFloor):
+            if (this.sheetService.cursors[0].ref.getTopologe().size === 0) {
+              this.sheetService.cursors[0].ref.createTopologe(Control[Control.FloorComponent]);
             }
             break;
-        }
-      });*/
+            case String(Commands.AddPort):
+              if (this.sheetService.cursors[0].ref.getTopologe().size === 0) {
+                this.sheetService.cursors[0].ref.createTopologe(Control[Control.PortComponent]);
+              }
+              break;
+          }
+      });
     });
 
     this.makeData$.subscribe(() => {
-     // const topologe = this.getTopologe();
-      /*const topologe.activeData()*/
+      const topologes = this.sheetService.cursors[0].ref.getTopologe();
+      const topologe = (topologes.size === 0)
+        ? this.sheetService.cursors[0].ref.createTopologe()
+        : topologes.values[0];
+
+      this.activeTopologe$.next(topologe);
     });
   }
-
-  /*getTopologe() {
-    if (!(this.topologe[this.cursor.left] && this.topologe[this.cursor.left][this.cursor.top])) {
-      this.topologe[this.cursor.left] = this.topologe[this.cursor.left] || [];
-      this.topologe[this.cursor.left][this.cursor.top] = new TopologeDto(this);
-      this.topologe$.next(
-        this.topologe.reduce((c: TopologeDto[], a: TopologeDto[]) => c.concat(a), []).filter(a => a instanceof TopologeDto)
-      );
-    }
-    return this.topologe[this.cursor.left][this.cursor.top];
-  }*/
 }

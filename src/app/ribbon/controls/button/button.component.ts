@@ -20,6 +20,6 @@ export class ButtonComponent implements OnInit {
   }
 
   click() {
-    this.ribbonService.states$.next({ command: this.command, payload: this.payload });
+    this.ribbonService.states$.next({ [this.command]: this.payload });
   }
 }

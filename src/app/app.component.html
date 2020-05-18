@@ -234,10 +234,12 @@
             </ribbon-button-toggle>
 
             <ribbon-button-toggle [command]="Commands.EditMergeCell" small>
-              <span class="iconify" data-icon="mdi:table-merge-cells" data-inline="false"></span>
+              <span
+                class="iconify"
+                data-icon="mdi:table-merge-cells"
+                data-inline="false"
+              ></span>
             </ribbon-button-toggle>
-
-
           </ribbon-panel>
         </ribbon-panel>
       </ribbon-group>
@@ -325,18 +327,35 @@
         </ribbon-panel>
       </ribbon-group>
     </ribbon-tab>
-    <ribbon-tab label="Вставка">
-      <ribbon-group>
-        <ribbon-panel> </ribbon-panel>
+    <ribbon-tab label="Этажи/Подьезды" style="height: 123px;">
+      <ribbon-group label="Этажи">
+        <ribbon-panel layout="horisontal">
+          <ribbon-button large [command]="Commands.AddFloor">
+            <span
+              class="iconify"
+              data-icon="mdi:view-sequential"
+              data-inline="false"
+            >
+            </span>
+            <div style="font-size: 0.2em;">Добавить этаж</div>
+          </ribbon-button>
+          <ribbon-button large [command]="Commands.AddPort">
+            <span
+              class="iconify"
+              data-icon="mdi:view-parallel"
+              data-inline="false"
+            >
+            </span>
+            <div style="font-size: 0.2em;">Добавить подъезд</div>
+          </ribbon-button>
+        </ribbon-panel>
       </ribbon-group>
     </ribbon-tab>
-    <ribbon-tab label="Дизайн">
+    <ribbon-tab label="Помещения">
       <ribbon-group>
         <ribbon-panel> </ribbon-panel>
       </ribbon-group>
     </ribbon-tab>
   </ribbon>
 </div>
-<sheet-page
-  style="height: calc(100% - 11.5em);"
-></sheet-page>
+<sheet-page style="height: calc(100% - 11.5em);"></sheet-page>

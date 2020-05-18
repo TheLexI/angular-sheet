@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Commands } from './commands.enum';
 import { RibbonService } from './ribbon/ribbon.service';
 import { filter } from 'rxjs/operators';
-import { SheetService } from './sheet/sheet.service';
+import { EditorService } from './sheet/editor.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +39,7 @@ export class AppComponent {
 
   constructor(
     private ribbonService: RibbonService,
-    private sheetService: SheetService
+    private editorService: EditorService
   ) {
 
     ribbonService.states$.pipe(filter((a: { [name: string]: any }) => !a.noEvent && Commands.EditBorderAll in a))
@@ -185,7 +185,7 @@ export class AppComponent {
   }
 
   doCommand(event) {
-    this.sheetService.command(event);
+    this.editorService.command$.next(event);
     console.log(event);
   }
 }

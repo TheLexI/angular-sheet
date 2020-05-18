@@ -1,13 +1,13 @@
-import { EditorService } from '../../editor.service';
-import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Control } from '../../controls/controls';
 export class TopologeDto {
   public left;
   public top;
   public rigth;
   public bottom;
+  public type = Control[Control.TextComponent];
 
-  public onChane$ = new Subject();
+  public change$ = new Subject();
 
   merge() {
     /* [this.left, this.rigth,

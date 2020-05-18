@@ -4,13 +4,13 @@ import { Directive, Input, ComponentFactory, ViewContainerRef, OnInit } from '@a
   selector: '[sheetComponent]'
 })
 export class ComponentDirective implements OnInit {
-  @Input() sheetComponent: ComponentFactory<any>;
+  @Input() sheetComponent: { ref: any, fac: ComponentFactory<any> };
   constructor(
     private ref: ViewContainerRef
   ) { }
 
   ngOnInit(): void {
-    this.ref.createComponent(this.sheetComponent);
+    this.sheetComponent.ref = this.ref.createComponent(this.sheetComponent.fac).instance;
   }
 
 }

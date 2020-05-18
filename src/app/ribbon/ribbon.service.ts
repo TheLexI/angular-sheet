@@ -16,7 +16,8 @@ export class RibbonService {
   constructor() {
     this.states$.subscribe((a: { [key: string]: any }) => {
       this.states = { ...this.states, ...a };
-      console.log(a);
     });
   }
+
+  inject(el){}
 }

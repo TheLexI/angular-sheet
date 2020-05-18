@@ -18,7 +18,7 @@ export class RibbonComponent implements OnInit {
   @Output() command = new EventEmitter<any>();
 
 
-  activeTab = new BehaviorSubject(0);
+  activeTab = new BehaviorSubject(1);
   tabs: HTMLDivElement[] = [];
   constructor(
     private ribbonService: RibbonService,

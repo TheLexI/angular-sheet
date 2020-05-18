@@ -1,10 +1,12 @@
-import { Component, OnInit, HostBinding, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ChangeDetectorRef, HostListener } from '@angular/core';
 import { PageComponent } from '../page.component';
-import { SheetService } from '../../sheet.service';
-import { EditorService } from '../../editor.service';
 import { fromEvent, Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { takeUntil, map, pairwise, startWith, filter } from 'rxjs/operators';
 import { TopologeDto } from '../dto/topologe-dto';
+import { EditorService } from '../../editor.service';
+import { SheetService } from '../../sheet.service';
+import { Command } from 'protractor';
+import { Control } from '../../controls/controls';
 
 @Component({
   selector: 'sheet-cursor',
@@ -23,14 +25,15 @@ export class CursorComponent implements OnInit {
   @HostBinding('style.width.px') width;
   @HostBinding('style.height.px') height;
 
-
   private selectionMatrix = { cols: [], rows: [] };
   private unsubscriber = new Subject();
+  private sheetService: SheetService;
+  private editorService: EditorService;
 
-  private lc = 0;
-  private rc = 0;
-  private tr = 0;
-  private br = 0;
+  public lc = 0;
+  public rc = 0;
+  public tr = 0;
+  public br = 0;
   /*
     - Зависит от
       - топологии
@@ -40,10 +43,12 @@ export class CursorComponent implements OnInit {
   */
   constructor(
     private pageComponent: PageComponent,
-    private sheetService: SheetService,
-    private editorService: EditorService,
     changeDetectorRef: ChangeDetectorRef
   ) {
+
+    this.sheetService = pageComponent.sheetService;
+    this.editorService = pageComponent.editorService;
+
     const left = this.left$.pipe(startWith(-1), pairwise(), filter(([a, b]) => a !== b), map(([a, b]) => b));
     left.subscribe(v => { this.left = v; changeDetectorRef.markForCheck(); });
     const top = this.top$.pipe(startWith(-1), pairwise(), filter(([a, b]) => a !== b), map(([a, b]) => b));
@@ -63,10 +68,9 @@ export class CursorComponent implements OnInit {
       start = this.getCellsFromPoint(event.clientX, event.clientY);
       const endMove = new Subject();
 
-      // - Если есть топология получить углы топологии
       if (this.editorService.topologe[start.lcol] && this.editorService.topologe[start.lcol][start.trow]) {
         const topologe = this.editorService.topologe[start.lcol][start.trow];
-        start = { ...start, rcol: topologe.rigth, brow: topologe.bottom };
+        start = { ...start, rcol: topologe.rc, brow: topologe.br };
       }
 
       // - Записать в матрицу выделения
@@ -82,8 +86,8 @@ export class CursorComponent implements OnInit {
         .subscribe((ev: MouseEvent) => {
           let moved = this.getCellsFromPoint(ev.clientX, ev.clientY);
           if (this.editorService.topologe[moved.lcol] && this.editorService.topologe[moved.lcol][moved.trow]) {
-            const topologe = this.editorService.topologe[start.lcol][start.trow];
-            moved = { ...start, rcol: topologe.rigth, brow: topologe.bottom };
+            const topologe = this.editorService.topologe[moved.lcol][moved.trow];
+            moved = { ...start, rcol: topologe.rc, brow: topologe.br };
           }
 
           // - Добавить в матрицу выделения ячейки
@@ -96,6 +100,22 @@ export class CursorComponent implements OnInit {
         });
     });
 
+  }
+
+  @HostListener('dblclick')
+  dblClick() {
+    this.calculatePositionCur();
+    this.editorService.activeTopologe$.next(Array.from(this.getTopologe())[0] || this.createTopologe());
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  f2Down(evt: KeyboardEvent) {
+    switch (evt.key) {
+      case 'F2':
+        this.calculatePositionCur();
+        this.editorService.activeTopologe$.next(Array.from(this.getTopologe())[0] || this.createTopologe());
+        break;
+    }
   }
 
   calculatePositionCur() {
@@ -113,17 +133,18 @@ export class CursorComponent implements OnInit {
     this.sheetService.rows[this.tr].top.pipe(takeUntil(this.unsubscriber)).subscribe(v => { this.top$.next(v); });
 
     combineLatest([this.sheetService.cols[this.rc].rigth, this.sheetService.cols[this.lc].left])
-      .pipe(takeUntil(this.unsubscriber), map(([a, b]) => a - b + 2)).subscribe(a => { this.width$.next(a); });
+      .pipe(takeUntil(this.unsubscriber), map(([a, b]: [number, number]) => a - b + 2)).subscribe(a => { this.width$.next(a); });
 
     combineLatest([this.sheetService.rows[this.br].bottom, this.sheetService.rows[this.tr].top])
-      .pipe(takeUntil(this.unsubscriber), map(([a, b]) => a - b + 2)).subscribe((a) => { this.height$.next(a); });
+      .pipe(takeUntil(this.unsubscriber), map(([a, b]: [number, number]) => a - b + 2)).subscribe((a) => { this.height$.next(a); });
   }
 
   getCellsFromPoint(x: number, y: number) {
+    ///this.editorService.activeTopologe$.next(false);
     let col = null;
     let row = null;
     for (const element of document.elementsFromPoint(x, y)) {
-      if (element.getAttribute('topologe') !== null) {
+      if (element.tagName.toLocaleLowerCase() === 'sheet-topologe') {
         col = element.getAttribute('data-col');
         row = element.getAttribute('data-row');
         break;
@@ -145,15 +166,22 @@ export class CursorComponent implements OnInit {
 
   getTopologe() {
     return new Set(
-      this.editorService.topologe.splice(this.lc, this.rc)
+      this.editorService.topologe.slice(this.lc, this.rc + 1)
         .filter(a => Array.isArray(a))
-        .map(a => a.splice(this.tr, this.br))
+        .map(a => a.slice(this.tr, this.br + 1))
         .reduce((c, a) => c.concat(a), [])
     );
   }
 
-  createTopologe() {
-    this.editorService.topologe[this.lc] = this.editorService.topologe[this.lc] || []
-    this.editorService.topologe[this.lc][this.tr] = new TopologeDto(this.lc, this.rc, this.tr, this.br);
+  createTopologe(type = Control[Control.TextComponent]) {
+    this.editorService.topologe[this.lc] = this.editorService.topologe[this.lc] || [];
+    this.editorService.topologe[this.lc][this.tr] = new TopologeDto(this.lc, this.tr, this.rc, this.br);
+    this.editorService.topologe[this.lc][this.tr].type = type;
+    (this.editorService as EditorService).topologe$.next(
+      this.editorService.topologe
+        .reduce((c, a) => c.concat(a), [])
+        .filter(a => a instanceof TopologeDto)
+    );
+    return this.editorService.topologe[this.lc][this.tr];
   }
 }

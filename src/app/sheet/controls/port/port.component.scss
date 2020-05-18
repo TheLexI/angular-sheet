@@ -1,0 +1,24 @@
+:host > div[contenteditable]{
+  width: 100%;
+  height: 100%;
+}
+:host > div[contenteditable]::before {
+  content: "Подьезд: ";
+}
+
+[top-line],
+[bottom-line] {
+  top: 0;
+  position: absolute;
+}
+[top-line]{
+  border: none;
+  left: -2px;
+  border-left: 2px dashed rgba(58, 94, 255, 0.3)
+}
+
+[bottom-line] {
+  border: none;
+  right: -2px;
+  border-right: 2px dashed rgba(58, 94, 255, 0.3)
+}

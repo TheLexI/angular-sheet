@@ -12,5 +12,7 @@ export enum Commands {
   EditAlign, EditAlignLeft, EditAlignCenter, EditAlignRigth, EditAlignJustify,
   EditValign, EditValignTop, EditValignCenter, EditValignBottom,
   EditIndentDesc, EditIndentInc,
-  EditTextNoWrap
+  EditTextNoWrap,
+  // ------
+  AddFloor,  AddPort
 }
